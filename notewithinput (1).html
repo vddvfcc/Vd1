@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title></title>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      body {
+         height: 100vh;
+         width: 100%;
+         background: #edeef0;
+      }
+
+      #main {
+         width: 100%;
+         display: flex;
+         flex-wrap: wrap;
+         /* background: black; */
+      }
+
+      .note {
+         background: #edeef0;
+         height: 200px;
+         width: 200px;
+         margin-top: 25px;
+         margin-left: 30px;
+         display: flex;
+         flex-direction: column;
+         box-shadow: 5px 5px 40px 1px lightgray,
+            -5px -5px 40px 1px lightgray;
+      }
+
+      #b {
+         width: 100%;
+         height: 30px;
+         background: green;
+         border: none;
+         color: white;
+         outline: none;
+      }
+
+      #text {
+         outline: none;
+         border: none;
+         width: 100%;
+         height: 170px;
+         padding: 12px;
+         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+
+      .row {
+         margin-top: 25px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding-left: 20px;
+         margin-bottom: 20px;
+         margin-right: 10px;
+         margin-left: 10px;
+         background: #edeef0;
+         border-radius: 30px;
+         box-shadow: 5px 5px 40px 1px lightgray,
+            -5px -5px 40px 1px lightgray;
+      }
+
+      input {
+         flex: 1;
+         background: transparent;
+         padding: 10px;
+         border: none;
+         outline: none;
+         font-weight: bold;
+      }
+
+      #btn {
+         border: none;
+         outline: none;
+         padding: 16px 50px;
+         border-radius: 30px;
+         background: green;
+         font-size: 20px;
+         color: #fff;
+         font-weight: bold;
+         cursor: pointer;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="row">
+      <input type="text" name="" id="input-box" placeholder="Add your Text" autofocus>
+      <button id="btn" onclick="abc()">Add</button>
+   </div>
+   <div id="main">
+      <!-- <div class="note">
+         <button id="b"> Delete</button>
+         <textarea id="text"></textarea>
+      </div> -->
+   </div>
+
+   <script>
+      let btn = document.getElementById("btn");
+      let divcantainer = document.getElementById("main");
+      const inputbox = document.getElementById("input-box");
+
+
+      function abc() {
+
+         if (inputbox.value.trim() === '') {
+            alert('plese fill somthing');
+         }
+
+         else {
+            let d = document.createElement("div");
+            d.classList.add("note");
+
+            // d.innerHTML = `<button id="b" class="del"> Delete</button>
+            // <textarea id = "text"></textarea>`;
+
+            let but = document.createElement("button");
+            but.innerHTML = "Delete";
+            but.id = "b";
+            d.appendChild(but);
+
+            let tear = document.createElement("textarea");
+            tear.id = "text";
+            tear.innerHTML = inputbox.value.trim();
+            d.appendChild(tear);
+
+            divcantainer.appendChild(d);
+
+         }
+         inputbox.value = '';
+         saveData();
+      }
+      divcantainer.addEventListener("click", function(e) {
+
+         if (e.target.tagName === "BUTTON") {
+            e.target.parentElement.remove();
+            saveData();
+         }
+
+      }, false);
+      
+      inputbox.addEventListener('keydown', function(e) {
+         if (e.key === 'Enter') {
+            abc();
+         }
+      });
+
+      function saveData() {
+         // text.innerHTML = "jgexduygwyuxghswfyw";
+         localStorage.setItem("data", divcantainer.innerHTML);
+      }
+
+      function showTask() {
+         divcantainer.innerHTML = localStorage.getItem("data");
+      }
+      showTask();
+   </script>
+</body>
+
+</html>
